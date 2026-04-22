@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI, TaskType } from "@google/generative-ai";
 
-const EMBEDDING_MODEL = "text-embedding-004";
-export const EMBEDDING_DIMENSIONS = 768;
+const EMBEDDING_MODEL = "gemini-embedding-2";
+export const EMBEDDING_DIMENSIONS = 3072;
 
 function getClient() {
   const key = process.env.GEMINI_API_KEY;
