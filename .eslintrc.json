@@ -1,0 +1,4 @@
+{
+  "extends": "next/core-web-vitals",
+  "ignorePatterns": ["plans/**", "snapshots/**", "source-materials/**", "prompts/**", "decisions/**", "architecture/**", "product/**"]
+}
