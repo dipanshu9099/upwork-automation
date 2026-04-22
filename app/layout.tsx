@@ -33,6 +33,12 @@ export default async function RootLayout({
                   Chat
                 </Link>
                 <Link
+                  href="/history"
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  History
+                </Link>
+                <Link
                   href="/admin/portfolio"
                   className="text-sm text-gray-600 hover:text-gray-900"
                 >
