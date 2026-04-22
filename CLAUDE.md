@@ -981,7 +981,7 @@ Cowork proposes pruning when:
 
 **Project:** Upwork Bid Bot (internal name: HestaBit Bid Bot)
 **Owner:** Dipanshu (dipanshuupadhyay@gmail.com)
-**Stack:** Next.js 14+ (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres + pgvector + Auth) + Gemini 2.5 Pro API + Gemini text-embedding-004 + Vercel
+**Stack:** Next.js 14+ (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres + pgvector + Auth) + Gemini 2.5 Pro API (`gemini-2.5-pro`) + Gemini text-embedding-004 + Vercel
 **Repo:** [URL — to be added once GitHub repo is created]
 **Lint / typecheck baseline:** [To be established after Phase 1 setup]
 
