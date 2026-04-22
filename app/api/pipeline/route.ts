@@ -3,13 +3,31 @@ import { createClient } from "@/lib/supabase/server";
 import { runPipeline } from "@/lib/pipeline/run";
 import { encodePipelineEvent } from "@/lib/pipeline/sse";
 import type { PipelineEvent } from "@/lib/pipeline/types";
+import { requireEnv } from "@/lib/env";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
 const MAX_JOB_INPUT_CHARS = 12_000;
 
+const REQUIRED_ENV_VARS = [
+  "GEMINI_API_KEY",
+  "NEXT_PUBLIC_SUPABASE_URL",
+  "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+  "SUPABASE_SERVICE_ROLE_KEY",
+];
+
 export async function POST(request: Request) {
+  try {
+    for (const key of REQUIRED_ENV_VARS) requireEnv(key);
+  } catch (err) {
+    console.error("[api/pipeline] env validation failed:", err);
+    return NextResponse.json(
+      { error: "Server misconfiguration. Contact admin." },
+      { status: 500 },
+    );
+  }
+
   let user;
   try {
     const supabase = createClient();
