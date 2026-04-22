@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { addPortfolioItem, PORTFOLIO_CATEGORIES } from "./actions";
+import { addPortfolioItem } from "./actions";
+import { PORTFOLIO_CATEGORIES } from "./constants";
 
 export default function PortfolioForm() {
   const [status, setStatus] = useState<{ type: "ok" | "error"; msg: string } | null>(null);

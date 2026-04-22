@@ -4,17 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient as createUserClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { embedDocument, EMBEDDING_DIMENSIONS } from "@/lib/gemini/embed";
-
-export const PORTFOLIO_CATEGORIES = [
-  "AI/ML",
-  "Web Scraping",
-  "Mobile App",
-  "Web App",
-  "Creative/Motion",
-  "Other",
-] as const;
-
-export type PortfolioCategory = (typeof PORTFOLIO_CATEGORIES)[number];
+import { PORTFOLIO_CATEGORIES, type PortfolioCategory } from "./constants";
 
 type ActionResult = { ok: true; id: string } | { ok: false; error: string };
 
