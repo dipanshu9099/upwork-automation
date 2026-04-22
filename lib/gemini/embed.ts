@@ -1,7 +1,11 @@
 import { GoogleGenerativeAI, TaskType } from "@google/generative-ai";
 
 const EMBEDDING_MODEL = "gemini-embedding-2";
-export const EMBEDDING_DIMENSIONS = 3072;
+// gemini-embedding-2 natively outputs 3072 dims; pgvector ivfflat caps at 2000.
+// Use Matryoshka truncation via outputDimensionality to get 768-dim vectors —
+// matches the vector(768) column and preserves the ivfflat index.
+export const EMBEDDING_DIMENSIONS = 768;
+const OUTPUT_DIMENSIONALITY = 768;
 
 function getClient() {
   const key = process.env.GEMINI_API_KEY;
@@ -43,7 +47,8 @@ async function runEmbed(text: string, taskType: TaskType): Promise<number[]> {
     const result = await model.embedContent({
       content: { role: "user", parts: [{ text }] },
       taskType,
-    });
+      outputDimensionality: OUTPUT_DIMENSIONALITY,
+    } as Parameters<typeof model.embedContent>[0]);
     console.log(
       "[gemini/embed] embedContent returned, dims:",
       result.embedding.values.length,
