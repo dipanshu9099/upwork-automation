@@ -44,6 +44,12 @@ export default async function RootLayout({
                 >
                   Portfolio
                 </Link>
+                <Link
+                  href="/admin/users"
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  Users
+                </Link>
               </div>
               <div className="flex items-center gap-3 text-sm text-gray-600">
                 <span>{user.email}</span>
