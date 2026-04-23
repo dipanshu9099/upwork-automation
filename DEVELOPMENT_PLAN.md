@@ -1,6 +1,6 @@
 # DEVELOPMENT_PLAN.md
 
-**Last reviewed:** 2026-04-22
+**Last reviewed:** 2026-04-23
 
 ## Overall approach
 
@@ -15,11 +15,14 @@ plumbing around them, not in the intelligence.
 
 | # | Phase | Delivers | Dependencies | Status | Detailed plan |
 |---|---|---|---|---|---|
-| 1 | Foundation | Auth, DB schema, portfolio ingestion, admin UI | None | 🔴 pending | `plans/DP-01-foundation.md` |
-| 2 | Pipeline Engine | 8-bot Gemini pipeline running server-side, streaming output | Phase 1 | 🔴 pending | `plans/DP-02-pipeline.md` |
-| 3 | Chat UI | Real-time chat interface showing bot outputs as they complete | Phase 2 | 🔴 pending | `plans/DP-03-chat-ui.md` |
-| 4 | Proposal History | Per-user proposal storage, history view, copy-to-clipboard | Phase 3 | 🔴 pending | `plans/DP-04-history.md` |
-| 5 | Hardening | Error handling, cost monitoring, Vercel production config, domain | Phase 4 | 🔴 pending | `plans/DP-05-hardening.md` |
+| 1 | Foundation | Auth, DB schema, portfolio ingestion, admin UI | None | ✅ DONE | `plans/DP-01-foundation.md` |
+| 2 | Pipeline Engine | 8-bot Gemini pipeline running server-side, streaming output | Phase 1 | ✅ DONE | `plans/DP-02-pipeline.md` |
+| 3 | Chat UI | Real-time chat interface showing bot outputs as they complete | Phase 2 | ✅ DONE | `plans/DP-03-chat-ui.md` |
+| 4 | Proposal History | Per-user proposal storage, history view, copy-to-clipboard | Phase 3 | ✅ DONE | `plans/DP-04-history.md` |
+| 5 | Hardening | Error handling, cost monitoring, Vercel production config, domain | Phase 4 | ✅ DONE | `plans/DP-05-hardening.md` |
+| 6 | Portfolio Data Quality | Re-ingest 145 real projects from docx with correct parsing, exclude 4 inspiration refs | Phase 5 | ✅ DONE | `plans/BRIEF-Phase6-Portfolio-Reingest.md` |
+| 7 | User Management | Admin UI to create/edit/delete users via Supabase Auth admin API | Phase 5 | 🔴 pending | `plans/BRIEF-Phase7-UserManagement.md` |
+| 8 | Proposal Quality | Upgrade Bot 6 to output execution blueprint; Bot 7 follows it field-by-field; Bot 8 polish rules | Phase 5 | 🔴 pending | `plans/BRIEF-Phase8-PromptQuality.md` |
 
 ---
 
@@ -41,21 +44,23 @@ plumbing around them, not in the intelligence.
 
 ## Current state
 
-**Currently in:** Phase 1 — not started
-**Phase started:** —
-**Target:** Ship Phase 1-3 as fast as possible; Phase 4-5 follow.
+**Currently in:** Phase 7 — User Management.
+**Phase 6 completed:** 2026-04-23 (214 projects ingested, 0 skipped,
+4 inspiration refs excluded; backup at
+scripts/backups/portfolio-backup-2026-04-23T05-13-31-445Z.json)
 
-**What's DONE:** Nothing yet — project kick-off session complete,
-source docs drafted and approved.
+**What's DONE:** Phases 1–6 — foundation, pipeline, chat UI, proposal
+history, error handling/cost monitoring, portfolio re-ingestion. Live at
+https://upwork-automation-six.vercel.app
 
-**What's in progress:** Awaiting Dipanshu to create Vercel, GitHub,
-and Supabase accounts and share access with Claude Code.
+**What's in progress:** Phase 7 (User Management) — brief ready for
+Claude Code.
 
-**What's next:** Claude Code implements Phase 1 (Foundation) once
-credentials are provisioned.
+**What's next:** Phase 8 (Proposal Quality) after Phase 7 ships and
+live-test checklist passes. Custom domain setup (Dipanshu manually via
+Vercel dashboard).
 
-**Known blockers:** Vercel + GitHub + Supabase + Gemini API key
-credentials not yet provisioned.
+**Known blockers:** None.
 
 ---
 

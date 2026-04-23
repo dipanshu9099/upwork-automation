@@ -982,8 +982,8 @@ Cowork proposes pruning when:
 **Project:** Upwork Bid Bot (internal name: HestaBit Bid Bot)
 **Owner:** Dipanshu (dipanshuupadhyay@gmail.com)
 **Stack:** Next.js 14+ (App Router) + TypeScript + Tailwind CSS + Supabase (Postgres + pgvector + Auth) + Gemini 2.5 Pro API (`gemini-2.5-pro`) + Gemini text-embedding-004 + Vercel
-**Repo:** [URL — to be added once GitHub repo is created]
-**Lint / typecheck baseline:** [To be established after Phase 1 setup]
+**Repo:** https://github.com/dipanshu-hestabitcom/upwork-automation (confirm URL with Dipanshu)
+**Lint / typecheck baseline:** 0 errors, 0 warnings as of commit 19f8c6b (2026-04-23)
 
 ### Stack-specific adaptations
 
@@ -1021,6 +1021,17 @@ Scope: New project onboarding. Full pipeline documented (8 bots, all prompts rev
 Decisions made: Gemini 2.5 Pro as AI engine, Supabase + pgvector for portfolio retrieval, streaming output (ADR-001), proposal history (ADR-002), no rate limiting v1 (ADR-003).
 Status: Blocked on credentials. Next action: Dipanshu creates GitHub + Vercel + Supabase accounts and provisions credentials for Claude Code.
 
+**Session 2 — 2026-04-22 / 2026-04-23**
+Scope: Full build — Phases 1–5 implemented and live on production.
+What shipped:
+- commit a0b79ed — Phase 2: 8-bot Gemini pipeline (types, prompts, SSE, run loop, generate, retrieve)
+- commit 98fc5a8 — Fix: model ID corrected from gemini-2.5-pro-preview-03-25 → gemini-2.5-pro (preview ID returns 404 on this API key)
+- commit b46a4d7 — Phase 4: Proposal history (list page, detail page, CopyButton, History nav link)
+- commit 19f8c6b — Phase 5: Error boundaries (app/error.tsx, app/history/error.tsx), custom 404, cost logging, env validation (lib/env.ts), history loading skeleton
+Known failure caught: gemini-2.5-pro-preview-03-25 returns 404 on this API key; always use gemini-2.5-pro.
+Cost baseline: ~$0.119 per full 8-bot pipeline run (30,821 prompt tokens + 8,028 output tokens at April 2026 pricing).
+Status: All phases complete. App live at https://upwork-automation-six.vercel.app
+
 ### Document Suite
 
 | ID | Type | Title | Status |
@@ -1028,29 +1039,29 @@ Status: Blocked on credentials. Next action: Dipanshu creates GitHub + Vercel + 
 | ADR-001 | Decision | Pipeline output display — streaming per bot | ✅ Accepted |
 | ADR-002 | Decision | Proposal history — save per user in Supabase | ✅ Accepted |
 | ADR-003 | Decision | Rate limiting — none in v1 | ✅ Accepted |
-| DP-01 | Phase plan | Foundation | 🔴 pending |
-| DP-02 | Phase plan | Pipeline Engine | 🔴 pending |
-| DP-03 | Phase plan | Chat UI | 🔴 pending |
-| DP-04 | Phase plan | Proposal History | 🔴 pending |
-| DP-05 | Phase plan | Hardening | 🔴 pending |
+| DP-01 | Phase plan | Foundation | ✅ DONE |
+| DP-02 | Phase plan | Pipeline Engine | ✅ DONE |
+| DP-03 | Phase plan | Chat UI | ✅ DONE |
+| DP-04 | Phase plan | Proposal History | ✅ DONE |
+| DP-05 | Phase plan | Hardening | ✅ DONE |
 
 ### Current State
 
-**Live:** Nothing yet — build not started.
-**In progress:** Nothing — waiting on credentials.
-**Blocked:** Need GitHub repo + Vercel project + Supabase project + Gemini API key from Dipanshu before Claude Code can start Phase 1.
+**Live:** All features — https://upwork-automation-six.vercel.app
+**In progress:** Nothing.
+**Blocked:** Nothing.
 
 ### Build Status Table
 
 | Feature | Status |
 |---|---|
-| GitHub repo + Vercel project setup | 🔴 pending |
-| Supabase schema (users, proposals, portfolio) | 🔴 pending |
-| Portfolio ingestion script (docx → structured records → embeddings) | 🔴 pending |
-| Admin UI — add/edit portfolio items | 🔴 pending |
-| Gemini pipeline (8 bots sequential, SSE streaming) | 🔴 pending |
-| Chat UI (real-time bot output display) | 🔴 pending |
-| Auth (login page, protected routes) | 🔴 pending |
-| Proposal history (save + view + copy) | 🔴 pending |
-| Error handling + cost monitoring | 🔴 pending |
-| Production config + domain | 🔴 pending |
+| GitHub repo + Vercel project setup | ✅ DONE |
+| Supabase schema (users, proposals, portfolio) | ✅ DONE |
+| Portfolio ingestion script (docx → structured records → embeddings) | ✅ DONE |
+| Admin UI — add/edit portfolio items | ✅ DONE |
+| Gemini pipeline (8 bots sequential, SSE streaming) | ✅ DONE |
+| Chat UI (real-time bot output display) | ✅ DONE |
+| Auth (login page, protected routes) | ✅ DONE |
+| Proposal history (save + view + copy) | ✅ DONE |
+| Error handling + cost monitoring | ✅ DONE |
+| Production config + domain | ✅ DONE |
