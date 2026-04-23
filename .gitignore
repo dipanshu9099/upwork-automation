@@ -52,6 +52,9 @@ snapshots/*/local-notes.md
 # Claude Code local settings
 .claude/
 
+# Script-local backups (pre-destructive snapshots of DB rows)
+scripts/backups/
+
 # Local source material (read at runtime by ingestion script; not committed)
 source-materials/
 
