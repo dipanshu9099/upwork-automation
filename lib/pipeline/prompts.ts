@@ -57,7 +57,24 @@ Based on the job details, infer and describe the following:
 
 7. **Red Flags to Avoid**: What specific things should you NOT say or do in your proposal that would immediately turn this buyer off?
 
-Output all of the above in clear, structured format. Be analytical, specific, and insightful — not generic.`,
+Output all of the above in clear, structured format. Be analytical, specific, and insightful — not generic.
+
+Output must include these additional scored fields at the end:
+
+PMF SCORES (1-10): Score each primary motivational factor from the job post.
+  PMF1: [factor] — [score]/10
+  PMF2: [factor] — [score]/10
+  (list all identified PMFs)
+
+FEAR SCORES (1-10): Score each fear from the job post.
+  Fear1: [fear] — [score]/10
+  Fear2: [fear] — [score]/10
+  (list all identified fears)
+
+AMBIGUITY TOLERANCE: [score]/10 — [one-line justification]
+RISK APPETITE: [score]/10 — [one-line justification]
+DECISION STYLE: Primary=[style], Secondary=[style] — [one-line justification]
+ATTENTION BIAS: [what they scan for first] — [evidence from the post]`,
   },
   {
     id: "technical",
@@ -157,7 +174,18 @@ Each story should follow this structure:
 - What we built / how we approached it
 - The outcome / result
 
-Keep stories concise, vivid, and directly relevant to this buyer's needs.`,
+Keep stories concise, vivid, and directly relevant to this buyer's needs.
+
+Also produce ONE industry story (2-3 sentences) that is NOT from our portfolio:
+- Describe a real-world pattern or failure mode relevant to this project
+- Frame it as "teams working on [domain] often find..." or "a common challenge in [domain] is..."
+- Do NOT claim this as our work
+- Make the lesson directly relevant to the buyer's primary fear
+- This is used ONLY if the portfolio proof is weak; Bot 6 decides
+
+Label it clearly:
+INDUSTRY STORY (not our work):
+[story here]`,
   },
   {
     id: "micro",
@@ -199,48 +227,7 @@ Write the micro-methodology as it would appear in the final proposal (ready to u
 
 ${state.jobInput}
 
-Here is the buyer persona:
-
-${req(state.outputPersona, "persona analysis")}
-
-Here is the technical analysis:
-
-${req(state.outputTechnical, "technical analysis")}
-
-Here are the portfolio selections:
-
-${req(state.outputPortfolio, "portfolio selection")}
-
-Here is the micro-methodology:
-
-${req(state.outputMicro, "micro-methodology")}
-
-Design the sales psychology strategy for this proposal:
-
-1. **Opening Hook Strategy**: What should the very first sentence of the proposal do? (e.g. mirror their pain, open with a bold statement, reference something specific from the post). Write 2-3 example opening hooks.
-
-2. **Trust Architecture**: What specific elements should be in the proposal to build maximum trust with THIS buyer? (social proof, transparency, guarantees, specificity, etc.)
-
-3. **Objection Pre-emption**: What objections is this buyer likely to have before hiring? How should the proposal subtly address each without sounding defensive?
-
-4. **Call to Action Strategy**: How should the proposal end? What specific CTA works best for this buyer type and project? Write the exact closing lines.
-
-5. **Tone & Language Calibration**: Give 5 specific word choices, phrases, or sentence patterns that will resonate with this buyer. Give 5 to avoid.
-
-6. **Proposal Length Guidance**: Should this be short (200-300 words), medium (400-500 words), or long (600+ words)? Why, based on this buyer?
-
-Output as a clear strategic brief for the proposal writer.`,
-  },
-  {
-    id: "bidwriter",
-    label: "Bid-Writing Bot",
-    systemPrompt: BIDWRITER_SYSTEM,
-    stateKey: "outputBidWriter",
-    buildUserPrompt: (state: PipelineState) => `Here is the Upwork job posting:
-
-${state.jobInput}
-
-Here is the buyer persona:
+Here is the buyer persona analysis with scores:
 
 ${req(state.outputPersona, "persona analysis")}
 
@@ -252,32 +239,155 @@ Here are the selected portfolio items:
 
 ${req(state.outputPortfolio, "portfolio selection")}
 
-Here are the product development stories:
-
-${req(state.outputProductDev, "product development stories")}
-
 Here is the micro-methodology:
 
 ${req(state.outputMicro, "micro-methodology")}
 
-Here is the sales psychology strategy:
+Here are the product development stories and industry story:
 
-${req(state.outputSalesPsych, "sales psychology strategy")}
+${req(state.outputProductDev, "product development stories")}
 
-Now write the complete Upwork proposal. Follow these rules:
+Produce a precise execution blueprint for the Bid-Writing Bot.
+Output as structured fields. Each field is a direct instruction.
 
-1. **Use the recommended opening hook** from the sales psychology strategy
-2. **Incorporate the product development stories** naturally — don't list them, weave them in
-3. **Include the micro-methodology** section verbatim or lightly adapted
-4. **Address the buyer's primary fear** subtly within the proposal
-5. **Use the calibrated tone and language** from the sales psychology analysis
-6. **End with the recommended CTA** from the sales psychology strategy
-7. **Hit the recommended proposal length**
-8. **Write in first person** as a senior HestaBit team member
-9. **Do NOT use generic phrases** like "I am interested in your project" or "I have X years of experience"
-10. **Do NOT use bullet points** in the proposal body — write in natural paragraphs
+FIELD 0 — OPENING HOOK
+Write 3 candidate opening hooks (one sentence each). Each must:
+- Start with the buyer's #1 fear or consequence, not with "I" or "we"
+- Be completable in ~12 words (Upwork preview limit)
+- Create a knowledge gap (hint at a solution without giving it)
+Then write: SELECTED HOOK: [which one and why in one line]
 
-Output only the final proposal text. No preamble, no explanation. Just the proposal, ready to copy-paste.`,
+FIELD 1 — EMOTIONAL TONE
+Desired feel: [2-3 words]
+Avoid: [2-3 specific things to avoid]
+Reason: [one line tied to persona scores]
+
+FIELD 2 — REFLECTION RULES
+How to open the proposal body (after greeting + hook):
+- Mirror these exact buyer phrases: [list 3-5 phrases from the job post verbatim]
+- First sentence must be about THEM not us
+- Forbidden: meta-compliments about the brief ("great project", "interesting challenge")
+- Reflection length: [compact 2-4 lines / medium 1 paragraph / skip]
+
+FIELD 2B — CONTENT ORDERING
+Front-load (put early): [ordered bullet list]
+Delay (put later or omit): [bullet list]
+Hard avoid (never include): [bullet list]
+Line-selling rule: [one sentence — what each line must do to earn the next]
+
+FIELD 3 — QUESTION STRATEGY
+Number of questions: [1 or 2]
+For each question:
+  - Internal topic: [the real technical/business question]
+  - Buyer-facing phrasing: [exact question text to use]
+  - Why it matters to buyer: [one line]
+Tone: [soft / direct / outcome-protecting]
+
+FIELD 4 — MICRO-METHOD DEPLOYMENT
+Include micro-method: [Yes / No / Condensed to one line]
+If yes: emotional job it must do: [one line]
+Where in proposal: [early / middle / before questions]
+
+FIELD 5 — PROOF STRATEGY
+Primary proof: [portfolio item name + URL if available]
+Buyer-benefit clause: [exact 1-sentence frame: "This shows X which means Y for your project"]
+Industry story: [include / suppress]
+If include: [which story and where]
+Coexistence rule: [can portfolio + story both appear? yes/no — why]
+
+FIELD 6 — CLOSING LINE
+Write the exact closing line(s) for the proposal.
+Requirements:
+- Warm but direct — not "if helpful" or "feel free"
+- References the questions asked
+- Has a clear next step
+- Max 2 sentences
+
+FIELD 7 — IDEA BUDGET
+Calculation:
+  Top PMF score: [score] → base blocks: [N]
+  Ambiguity tolerance: [score] → cap: [N]
+  Top Fear score: [score] → adjustment: [+0 / cap further]
+  MAX IDEA BLOCKS: [final number — never exceed 5]
+
+FIELD 8 — HARD RED LINES FOR BOT 7
+List 6-10 absolute prohibitions for the Bid-Writing Bot.
+Each must be specific and actionable (not generic like "be concise").
+Examples of the right level of specificity:
+- "Do not include a step-by-step phase plan — reads as task-only delivery to this buyer"
+- "Do not open with 'I' — Upwork preview will show it; hook must lead"
+- "Do not use 'if helpful' or 'feel free' — weak framing for this buyer type"
+
+FIELD 9 — BLOCK PLAN
+Allocate the MAX IDEA BLOCKS from Field 7 across the proposal:
+Block 1: [what it must contain]
+Block 2: [what it must contain]
+Block 3: [what it must contain — if budget allows]
+(etc.)
+
+Suppression order if crowded (which blocks to cut first):
+1. [first to cut]
+2. [second to cut]
+Never cut: [what must always stay]
+
+FIELD 10 — LENGTH AND FORMAT
+Target word count: [number range]
+Paragraph structure: [how many paragraphs, rough purpose of each]
+Line breaks: [where to use them — Upwork plain text]
+Forbidden formatting: [markdown headers / bullet points / bold]`,
+  },
+  {
+    id: "bidwriter",
+    label: "Bid-Writing Bot",
+    systemPrompt: BIDWRITER_SYSTEM,
+    stateKey: "outputBidWriter",
+    buildUserPrompt: (state: PipelineState) => `Here is the Upwork job posting:
+${state.jobInput}
+
+Here is the buyer persona:
+${req(state.outputPersona, "persona analysis")}
+
+Here is the technical analysis:
+${req(state.outputTechnical, "technical analysis")}
+
+Here are the selected portfolio items:
+${req(state.outputPortfolio, "portfolio selection")}
+
+Here are the product development stories:
+${req(state.outputProductDev, "product development stories")}
+
+Here is the micro-methodology:
+${req(state.outputMicro, "micro-methodology")}
+
+Here is the sales psychology execution blueprint:
+${req(state.outputSalesPsych, "sales psychology blueprint")}
+
+Write the complete Upwork proposal. Follow the execution blueprint
+field by field — it is your strict specification, not a suggestion.
+
+MANDATORY RULES:
+1. Line 1 is the greeting (Hi / Hi [name] / Hi [company] team)
+2. Line 2 embeds FIELD 0 SELECTED HOOK — exactly as written or
+   lightly adapted. Do not bury it.
+3. Follow FIELD 2 REFLECTION RULES — mirror buyer phrases exactly,
+   first sentence about them, no meta-compliments
+4. Follow FIELD 2B CONTENT ORDERING — front-load what it says,
+   delay what it says, never include what it prohibits
+5. Include FIELD 5 PRIMARY PROOF with the exact buyer-benefit clause
+   from the blueprint
+6. Include / suppress industry story per FIELD 5 coexistence rule
+7. Ask FIELD 3 QUESTIONS — use the buyer-facing phrasing exactly
+8. End with FIELD 6 CLOSING LINE — use it verbatim or lightly adapted.
+   Never use "if helpful", "feel free", or passive CTAs.
+9. Stay within FIELD 7 MAX IDEA BLOCKS — do not exceed it
+10. Obey every item in FIELD 8 HARD RED LINES — no exceptions
+11. Follow FIELD 9 BLOCK PLAN — allocate content exactly as specified
+12. Hit FIELD 10 TARGET WORD COUNT — cut or expand accordingly
+13. Write in first person as a senior HestaBit team member
+14. No bullet points in the proposal body — natural paragraphs only
+15. Plain text only — no markdown, no headers, no bold
+
+Output ONLY the final proposal. No preamble, no labels, no explanation.`,
   },
   {
     id: "formatter",
@@ -303,6 +413,14 @@ Edit and format the proposal:
 4. **Length Check**: If the proposal is too long, cut ruthlessly. If too short, identify where more specificity or credibility would help.
 
 5. **Human Voice**: Remove any phrases that sound obviously AI-generated. Make it sound like a confident, experienced person wrote this.
+
+5b. **CLOSING LINE CHECK**: The last 1-2 sentences must be direct and warm. If you see "if helpful", "feel free to", "don't hesitate", or "I'd be happy to" — rewrite the closing to be active and specific. The closing should name the next step, not offer one passively.
+
+5c. **WHAT-WON'T-GO-WRONG AUDIT**: If the proposal has a paragraph explaining what will not go wrong or what risks are covered, it must be no longer than 3 sentences. Cut anything beyond 3 sentences from that block ruthlessly. Quality over quantity.
+
+5d. **IDEA DENSITY CHECK**: If more than 4 distinct concepts appear in the proposal, identify the weakest one and cut it entirely. A sharper, shorter proposal wins over a comprehensive one.
+
+5e. **PROOF CLAUSE CHECK**: If a portfolio link appears, it must be followed immediately by a one-sentence buyer-benefit clause explaining specifically why that project is relevant. If the clause is missing or generic ("this shows our experience"), rewrite it to name the specific capability it proves.
 
 6. **Final Line**: Ensure the closing is warm, specific, and has a clear next step.
 
