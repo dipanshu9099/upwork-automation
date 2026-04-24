@@ -39,6 +39,12 @@ export default async function RootLayout({
                   History
                 </Link>
                 <Link
+                  href="/feedback"
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  Feedback
+                </Link>
+                <Link
                   href="/admin/portfolio"
                   className="text-sm text-gray-600 hover:text-gray-900"
                 >
